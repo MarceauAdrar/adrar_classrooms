@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VehiculeConcessionnaire index{% endblock %}
+
+{% block body %}
+    <h1>VehiculeConcessionnaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicule_concessionnaire in vehicule_concessionnaires %}
+            <tr>
+                <td>{{ vehicule_concessionnaire.id }}</td>
+                <td>
+                    <a href="{{ path('app_vehicule_concessionnaire_show', {'id': vehicule_concessionnaire.id}) }}">show</a>
+                    <a href="{{ path('app_vehicule_concessionnaire_edit', {'id': vehicule_concessionnaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vehicule_concessionnaire_new') }}">Create new</a>
+{% endblock %}

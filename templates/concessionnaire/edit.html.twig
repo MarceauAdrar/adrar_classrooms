@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Concessionnaire{% endblock %}
+
+{% block body %}
+    <h1>Edit Concessionnaire</h1>
+
+    {{ include('concessionnaire/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_concessionnaire_index') }}">back to list</a>
+
+    {{ include('concessionnaire/_delete_form.html.twig') }}
+{% endblock %}

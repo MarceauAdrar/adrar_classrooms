@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\UuidV7;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
@@ -59,9 +60,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Opinion $opinion = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private ?bool $activated = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $code = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $uuid = null;
+
     public function __construct()
     {
         $this->image = 'default_avatar.png';
+        $this->activated = false;
+        $this->uuid = new UuidV7();
         // $this->utilisateursChapitres = new ArrayCollection();
         $this->userChapters = new ArrayCollection();
     }
@@ -140,7 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    
+
     public function getLastName(): ?string
     {
         return $this->lastName;
@@ -262,6 +277,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->opinion = $opinion;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function isActivated(): ?bool
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): static
+    {
+        $this->activated = $activated;
+
+        return $this;
+    }
+
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    public function setCode(?int $code): static
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): static
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

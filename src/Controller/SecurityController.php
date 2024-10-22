@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -14,6 +16,20 @@ class SecurityController extends AbstractController
     public function google(): Response
     {
         return new Response('ok');
+    }
+
+    #[Route(path: '/verify/{uuid}/{code}', name: 'app_verify_email')]
+    public function verify(UserRepository $userRepository, EntityManagerInterface $entityManager, string $uuid, string $code): Response
+    {
+        $user = $userRepository->findOneBy(['uuid' => $uuid, 'code' => $code]);
+        if ($user instanceof User) {
+            $user->setActivated(true);
+            $user->setCode(null);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_login');
+        }
+        return new Response('error');
     }
 
     #[Route(path: '/login', name: 'app_login')]
@@ -30,7 +46,7 @@ class SecurityController extends AbstractController
             'error' => $error,
         ]);
     }
-    
+
     #[Route(path: '/admin/login', name: 'app_admin_login')]
     public function loginBis(AuthenticationUtils $authenticationUtils): Response
     {

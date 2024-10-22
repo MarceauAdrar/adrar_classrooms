@@ -15,26 +15,34 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        
+
         // Create the admin user
         $user = new User();
         $user->setUsername("admin");
         $user->setPassword(password_hash('adminnum', PASSWORD_BCRYPT));
+        $user->setRoles(["ROLE_ADMIN"]);
         $user->setLastName("Les");
         $user->setFirstName("Admin");
         $user->setImage($faker->imageUrl(640, 480, 'network'));
+        $user->setEmail($faker->unique()->email);
+        $user->setUuid($faker->unique()->uuid);
+        $user->setActivated(true);
         $manager->persist($user);
 
         // Create the dev user
         $user = new User();
         $user->setUsername("dev");
         $user->setPassword(password_hash('devnum', PASSWORD_BCRYPT));
+        $user->setRoles(["ROLE_DEV"]);
         $user->setLastName($faker->lastName);
         $user->setFirstName($faker->firstName);
         $user->setImage("default_avatar.png");
+        $user->setEmail("marceau.ro@adrar-numerique.com");
+        $user->setUuid($faker->unique()->uuid);
+        $user->setActivated(true);
         $manager->persist($user);
 
-        for ($i = 0; $i < self::USER_COUNT; $i++) { 
+        for ($i = 0; $i < self::USER_COUNT; $i++) {
             $user = new User();
             $user->setUsername($faker->unique()->userName);
             $user->setPassword(password_hash('pwd' . $user->getUsername(), PASSWORD_BCRYPT));
@@ -44,6 +52,8 @@ class UserFixtures extends Fixture
             if (rand(1, 10) <= 7) {
                 $user->setGoogleId($faker->unique()->uuid);
             }
+            $user->setEmail($faker->unique()->email);
+            $user->setUuid($faker->unique()->uuid);
 
             $manager->persist($user);
             $this->addReference(self::USER_REFERENCE_TAG . $i, $user);

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,14 +35,15 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password', 'class' => 'register-input']
             ])
+            ->add('email', EmailType::class, [
+                'attr' => ['autocomplete' => 'email', 'class' => 'register-input']
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Image de profil (tout types)',
                 'mapped' => false, // Cette ligne signifie que ce champs ne sera associé à aucune propriété de l'entité
                 'required' => false, // Permet de ne pas rendre ce champs obligatoire
                 'attr' => ['accept' => 'image/*'] // Accepte tous les fichiers de type image
-            ]);
-    
-        ;
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

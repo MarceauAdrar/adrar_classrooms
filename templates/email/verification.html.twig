@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>
+      Vérifiez votre email en cliquant sur le lien suivant :
+      <a href="{{ url('app_verify_email', { uuid: user.uuid, code: user.code }) }}">Vérifiez votre compte</a>.
+    </p>
+  </body>
+</html>

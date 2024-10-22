@@ -1,0 +1,5 @@
+{% if field.value %}
+    <img src="{{ asset('uploads/avatars/' ~ field.value) }}" alt="Image" style="width: 100px; height: auto;" />
+{% else %}
+    <span>No image</span>
+{% endif %}

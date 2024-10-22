@@ -1,24 +1,24 @@
 # :star: ADRAR Classrooms :star:
 
 ## But :soccer:
-Chaque personne va se voir être attribuée à une équipe (2 au total).
-Dans chaque équipe, un *leader* sera désigné. C'est avec le *leader* que le formateur s'entretiendra.
-Pensez donc à communiquer à celui-ci les choses faites... Le formateur les passera ensuite en "Fait" sur le Trello.
-
-### Site web 🌐
-Vous allez devoir développer en collaboration votre premier site web en utilisant les outils suivants: 
-- Github (avec la CLI de Git) en utilisant *une branche par fonctionnalité*
-- Trello pour se tenir à jour des tâches effectuées et à faire... Attention aux *deadlines* !
-- Figma pour suivre la DA générale du site à produire
-### API 🔨
-Construire une API pour aider l'autre équipe à intéragir avec son application. Il devra y avoir:
-- l'API de type REST
-- l'utilisation des méthodes HTTP pour gérer tous les cas
-- faire en sorte de gérer les routes qui demanderont des données auprès de l'application web
+Cette fois, chaque personne va travailler en autonomie sur le projet pour assimiler les principes liés à la sécurité.
 
 ## Tâches ⏰
+- Personnaliser votre fichier .env/.env.dev pour définir l'accès à votre BDD, puis executer la commande `symfony console doctrine:database:create` à l'intérieur du dossier
+- Charger les structures des tables avec la commande `symfony console doctrine:migrations:migrate`
+- Alimenter les tables avec la commande `symfony console doctrine:fixtures:load` 
 - Executer la commande `composer install` à l'intérieur du dossier pour installer les dépendances du fichier *composer.json*
+- Executer la commande `symfony console asset-map:compile` à l'intérieur du dossier pour compresser tout le dossier racine **assets** dans le dossier racine accessible au **public**
 - Rechercher toutes les `TODO:` dans le code (loupe dans le menu latéral gauche) pour voir toutes les actions à faire
+- Vous allez devoir implémenter ces différents éléments:
+    - Mettre à jour le projet
+    - Système de validation de compte par mail avant de se connecter
+    - Filtrage des entrées utilisateurs pour faire en sorte de se protéger
+    - Utiliser un pare-feu en s'aidant de la documentation et du cours et éléments pré-existants
+    - Hiérarchiser l'accès **aux pages** et actions sur les pages en fonction du privilège de l'utilisateur
+    - Jouer avec les en-têtes pour voir les changements qui ont lieu et gérer chaque cas qui doit-être géré (*not found*, *empty*, *found*, ...)
+    - Mettre en place un système anti Ddos sur le formulaire de connexion en limitant le nombre de requêtes sur une période donée
+    - Mettre en place une **journalisation** de débogage sécurisée
 
 ## Trame :link:
 - Le lien vers le Figma est accessible: [`ici`](<https://www.figma.com/design/LhgsAaXHN8HVJfpXeyjhDQ/Adrar-Classrooms?node-id=0-1&node-type=canvas>)
@@ -34,4 +34,4 @@ Retrouvez ici les commandes principales dont vous aurez besoin:
 - `symfony console doctrine:migrations:migrate` Permet de lancer l'exécution du/des fichier(s) de migration(s) permettant la mise à jour de la BDD
 - `symfony console doctrine:fixtures:load` Permet de lancer l'exécution des fixtures pour alimenter la BDD à l'aide de Faker
 
-Trois entités par défaut (Concessionnaire, Vehicule & VehiculeConcessionnaire) ont été créées dans cet exemple pour aller de A à Z. Vous pouvez librement vous en inspirer pour réaliser les vôtres.
+**NB: Le travail a ici été pas mal pré-mâché, même si tout n'est pas terminé, vous avez une base solide pour vous entraîner. Vous avez la possibilité de faire cela sur un nouveau projet/sur votre projet, en Symfony, bien sûr.**

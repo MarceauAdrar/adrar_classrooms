@@ -1,0 +1,17 @@
+<header class="bg-black c-white">
+  <img class="logo_site" src="{{ asset('images/adrar_classrooms_logo.png') }}" onclick="window.location.href = '{{ path('app_home') }}';" alt="Logo du site" />
+  <p class="wii titre text-center" onclick="window.location.href = '{{ path('app_home') }}';">Classrooms</p>
+  <nav class="navbar">
+    <a class="c-white" href="{{ path('app_home') }}">Accueil</a>
+    <a class="c-white" href="{{ path('app_course_index') }}">Formations</a>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DEV') %}
+      {# <a class="c-white" href="{{ path('app_admin') }}">Administration</a> #}
+    {% endif %}
+    <i class="fa-solid fa-magnifying-glass"></i>
+    {% if app.user is not empty %}
+      <a class="c-white pull-right" href="#">{{ app.user.firstName|capitalize }}&nbsp;{{ app.user.lastName|upper }}</a>
+    {% else %}
+      <a class="btn btn-connexion bg-black c-blue pull-right" href="{{ path('app_login') }}">Se connecter</a>
+    {% endif %}
+  </nav>
+</header>

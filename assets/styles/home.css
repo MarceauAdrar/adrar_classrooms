@@ -1,0 +1,110 @@
+section {
+    padding: 1em 0;
+}
+.candidature {
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+.candidature > div {
+    display: block;
+}
+.candidature, .avis {
+    background-color: #5584AC;
+    height: auto;
+    padding: 5vw;
+    padding-bottom: 20px;
+}
+
+.candidature .img_etudiante {
+    z-index: 1;
+    position: absolute;
+}
+
+.presentation {
+    background-color: #000;
+    height: auto;
+    z-index: 2;
+    position: relative;
+}
+
+.presentation span {
+    display: inline-block;
+    width: 33%;
+    text-align:center;
+}
+
+h2 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Slider container */
+.slider {
+    position: relative;
+    width: 300px;
+    height: 250px; /* Adjusted to fit image + text */
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+/* All slides will be in a row */
+.slides {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Each individual slide */
+.slide {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Style for the image */
+.slide img {
+    width: 100%; /* Make the image take the full width of the slider */
+    height: auto; /* Maintain aspect ratio */
+    border-bottom: 2px solid #ddd; /* Add a small separation line */
+}
+
+/* Style for the text */
+.slide p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Button container - New CSS for centering the buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Style for both prev and next buttons */
+.prev, .next {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    margin: 0 5px; /* Space between buttons */
+}
+
+/* Hide buttons on mobile */
+@media (max-width: 600px) {
+    .prev, .next {
+        display: none;
+    }
+}

@@ -1,0 +1,61 @@
+body {
+    background-color: #5584AC;
+}
+
+h1 {
+    margin-top: 1em;
+}
+
+h1, 
+select {
+    margin-left: 5rem;
+}
+
+.card {
+    background-color: #000000;
+    margin: 1rem 5rem;
+    border-radius: 5px;
+    height: 25vh;
+    display: grid;
+    grid-template-columns: 0.35fr 1fr;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 10px 5px 5px #316c9e;
+}
+
+.presentation-cours-img {
+    padding: 24px 0 24px 30px;
+}
+
+.presentation-cours-img img {
+    height: 182px;
+    aspect-ratio: 2/1;
+}
+
+.presentation-cours-text {
+    padding-top: 24px; 
+}
+
+.card-icons, .card-synopsis {
+    padding-top: 1rem;
+}
+
+.form-select {
+    display: block;
+    width: 10%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    background-color: #212529;
+    background-clip: padding-box;
+    border: 1px solid #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Formations
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('styles/formations.css') }}" />
+{% endblock %}
+
+{% block body %}
+  {% include '_components/_navbar.html.twig' %}
+  <main>
+    <h1>Cours</h1>
+    <select class="form-select">
+      <option disabled selected>Langages</option>
+      {% for formation in course %}
+        <option>{{ formation.title }}</option>
+      {% endfor %}
+    </select>
+
+    {% for formation in course %}
+      {% set name = formation.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+      <div class="card c-white" onclick="window.location.href = '{{ path('app_course_show_course', { course: name }) }}'">
+        <div class="presentation-cours-img">
+          {% if formation.picture starts with 'https' %}
+            <img src="{{ formation.picture }}" alt="Image de présentation du cours {{ formation.title }}" />
+          {% else %}
+            <img src="{{ asset('images/cours/' ~ formation.picture) }}" alt="Image de présentation du cours {{ formation.title }}" />
+          {% endif %}
+        </div>
+        <div class="presentation-cours-text">
+          <p class="wii">Cours</p>
+          <p class="card-title">{{ formation.title }}</p>
+          <div class="card-icons">
+            <span><img src="{{ asset('icons/signal-solid.svg') }}" alt="Icône de signal reflétant le niveau du cours" />&nbsp;{{ formation.level }}</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ asset('icons/clock-regular.svg') }}" alt="Icône d'horloge reflétant la durée estimée pour effectuer le cours'" />&nbsp;{{ formation.estimatedTime }}</span>
+          </div>
+          <p class="card-synopsis">{{ formation.synopsis }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </main>
+  {% include '_components/_footer.html.twig' %}
+{% endblock %}

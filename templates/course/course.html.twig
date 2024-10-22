@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ course.title }}
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('styles/course.css') }}" />
+{% endblock %}
+
+{% block js %}
+  <script src="{{ asset('js/course.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+  {% include '_components/_navbar.html.twig' %}
+  <main>
+    <section class="cours-presentation bg-blue">
+      <h1>{{ course.title }}</h1>
+      <div class="pt-5">
+        <div class="card-icons">
+          <span>
+            <span><img src="{{ asset('icons/signal-solid-black.svg') }}" alt="Icône de signal reflétant le niveau du cours" />&nbsp;{{ course.level }}</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ asset('icons/clock-regular-black.svg') }}" alt="Icône d'horloge reflétant la durée estimée pour effectuer le cours'" />&nbsp;{{ course.estimatedTime }}</span>
+          </span>
+          <span>
+            <span style="display:flex;align-items:center;"><img src="{{ asset('icons/pdf-circle.svg') }}" alt="Icône de téléchargement au format PDF" />&nbsp;Date de publication/mise à jour</span>
+          </span>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="cours-progression">
+        <img src="{{ asset('icons/house-circle.png') }}" alt="Icône de maison reflétant la page de garde du cours" />
+        {% set courseTitle = course.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+        {% if chapter is defined %}
+        {% set chapterTitle = chapter.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+        {% endif %}
+        
+        {% for chapterElements in chapters %}
+          {% set chapterElementTitle = chapterElements.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+          <span class="chapitre-indicateur" onclick="window.location.href = '{{ path('app_course_show_chapter', { course: courseTitle, chapter: chapterElementTitle }) }}';"></span>
+        {% endfor %}
+        <img src="{{ asset('icons/certificate-circle.png') }}" alt="Icône de bulle reflétant le certificat obtensible en fin de formation" />
+      </div>
+      {% if chapter is defined %}
+      <h2>{{ chapter.title }}</h2>
+      <div class="cours-chapitre">
+        <div class="cours-chapitre-text">
+          <p>{{ chapter.content }}</p>
+        </div>
+      </div>  
+      {% else %}
+      <h2>{{ course.title }}</h2>
+      <div class="cours-chapitre">
+        <div class="cours-chapitre-text">
+          <p>{{ course.synopsis }}</p>
+        </div>
+      </div>  
+      {% endif %}
+      
+      <div style="text-align: center;padding-bottom:1em;">
+        {% if chapter is defined %}
+        <div><a class="btn btn-outline c-white" href="{{ path('app_course_validate_chapter', {'chapterId': chapter.id, 'finished': true}) }}">Je valide ce chapitre et passe au suivant</a></div>
+        {% endif %}
+        <div>
+          {% if chapter is defined and previousChapter is defined and previousChapter is not empty %}
+          {% set previousChapterTitle = previousChapter.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+          <a class="btn btn-inline" href="{{ path('app_course_show_chapter', {'course': courseTitle, 'chapter': previousChapterTitle}) }}"><i class="fa-solid fa-chevron-left"></i>&nbsp;Passer au chapitre précédent</a>
+          {% elseif chapter is defined %}
+          <a class="btn btn-inline" href="{{ path('app_course_show_course', {'course': courseTitle}) }}"><i class="fa-solid fa-chevron-left"></i>&nbsp;Présentation du cours</a>
+          {% endif %}
+          {% if chapter is defined and nextChapter is defined and nextChapter is not empty %}
+          {% set nextChapterTitle = nextChapter.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+          <a class="btn btn-inline" href="{{ path('app_course_show_chapter', {'course': courseTitle, 'chapter': nextChapterTitle}) }}">Passer au chapitre suivant&nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+          {% else %}
+          {% set nextChapterTitle = nextChapter.title|lower|replace({ ' ': '-', 'à': 'a' }) %}
+          <a class="btn btn-inline" href="{{ path('app_course_show_chapter', {'course': courseTitle, 'chapter': nextChapterTitle}) }}">Commencer le cours&nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+  {% include '_components/_footer.html.twig' %}
+{% endblock %}

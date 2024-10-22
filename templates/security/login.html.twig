@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Connexion
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('styles/login.css') }}" />
+{% endblock %}
+
+{% block js %}
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+{% endblock %}
+
+{% block body %}
+  <div class="app">
+    <div class="gauche">
+      <p class="wii titre pt-3">ADRAR Classrooms</p>
+      <p class="bienvenue">Bienvenue</p>
+
+      <form method="post">
+        {% if error %}
+          <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        {% include "_components/_flashes.html.twig" %}
+
+        <label for="inputEmail">Email</label>
+        <input type="text" value="{{ last_username }}" name="_username" id="inputEmail" class="login-input" autocomplete="off" required autofocus />
+        <label for="inputPassword">Password</label>
+        <input type="password" name="_password" id="inputPassword" class="login-input" autocomplete="current-password" required />
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+        <button class="login-btn c-white" type="submit">Se connecter</button>
+      </form>
+
+      <hr class="separateur" />
+      <div class="connnect-with">
+        <p class="c-white">ou continuer avec</p>
+        {# <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}">Log in via Google</a> #}
+        <div id="g_id_onload" data-client_id="986443914291-6tsqat1qjkv8md9rd4mn676hen0vbnof.apps.googleusercontent.com" data-context="use" data-ux_mode="popup" data-login_uri="{{ path('app_google_login') }}" data-nonce="" data-auto_prompt="false"></div>
+
+        <div class="g_id_signin" data-type="icon" data-shape="square" data-theme="outline" data-text="signin_with" data-size="large" data-locale="fr"></div>
+      </div>
+    </div>
+
+    <div class="droit">
+      <p class="commentaire">« J'étais musicien indépendant, mais la COVID a tout stoppé. On m’a parlé d’ADRAR Classrooms, ça m'a ouvert des opportunités professionnelles insoupçonnées. »</p>
+      <p class="auteur">Alexandre - Développeur Full-Stack Junior</p>
+      <img class="image" src="{{ asset('images/happy_man.png') }}" alt="Homme heureux" />
+    </div>
+  </div>
+{% endblock %}

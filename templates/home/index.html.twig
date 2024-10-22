@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Accueil
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ asset('styles/home.css') }}" />
+{% endblock %}
+
+{% block body %}
+  {% include '_components/_navbar.html.twig' %}
+  <main>
+    <section class="candidature c-white">
+      <div>
+        <h2>Votre métier de demain, à portée de main</h2>
+        <p>Développez de nouvelles compétences dans le domaine de l’informatique et intégrer la formation de votre choix.</p>
+        <a href="#" class="btn btn-inline">Démarrer ma candidature</a>
+        <a href="{{ path('app_course_index') }}" class="btn btn-outline c-white">Découvrir les formations</a>
+      </div>
+      <div>
+        <img src="{{ asset('images/undraw_en_train_d_etudier.svg') }}" alt="Illustration étudiante qui étudie" class="img_etudiante" />
+      </div>
+    </section>
+    <section class="presentation c-white">
+      <span>
+        <img src="{{ asset('images/undraw_diplomes_certifiants.svg') }}" alt="Illustration étudiante qui étudie" class="img_etudiante" />
+        <h3>Diplômes certifiants</h3>
+        <p>Nos parcours procurent des titres reconnus par l’État</p>
+      </span>
+      <span>
+        <img src="{{ asset('images/undraw_mentor.svg') }}" alt="Illustration étudiante qui étudie" class="img_etudiante" />
+        <h3>Mentor</h3>
+        <p>Un expert du secteur vous suit de manière régulière</p>
+      </span>
+      <span>
+        <img src="{{ asset('images/undraw_rembourse_si_non_embauche.svg') }}" alt="Illustration étudiante qui étudie" class="img_etudiante" />
+        <h3>Remboursé si non embauché</h3>
+        <p>Un expert du secteur vous suit de manière régulière</p>
+      </span>
+    </section>
+    <section class="avis c-white p-1 text-center">
+      <h3>Témoignages & sourires</h3>
+      <div class="slider">
+        <div class="slides">
+          {% set maxCount = 10 %}
+          {% set count = 0 %}
+          {% for opinion in opinions %}
+          {% if count < maxCount %}
+          <div class="slide">
+            {% if opinion.user.image starts with 'https' %}
+            <img src="{{ opinion.user.image }}" alt="Image {{ opinion.user.username }}" loading="lazy">
+            {% else %}
+            <img src="{{ asset('uploads/avatars/' ~ opinion.user.image) }}" alt="{{ opinion.user.image }}" loading="lazy">
+            {% endif %}
+            <p>{{ opinion.comment }}</p>	
+          </div>
+          {% endif %}
+          {% set count = count + 1 %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Controls placed inside a centered container -->
+      <div class="buttons">
+        <button class="prev" onclick="prevSlide()">&#10094;</button>
+        <button class="next" onclick="nextSlide()">&#10095;</button>
+      </div>
+    </section>
+  </main>
+
+  {% include '_components/_footer.html.twig' %}
+{% endblock %}
+
+{% block js %}
+  <script src="{{ asset('js/home.js') }}"></script>
+{% endblock %}
